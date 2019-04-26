@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spz.dao.mapperMap">
+
+	<resultMap type="students" id="resultMapStudents">
+		<id property="stu_id" column="stu_id"  />
+		<result property="stu_name" column="stu_name" />
+		<result property="sex" column="sex" />
+		<result property="mtel" column="mtel" />
+		<result property="qq" column="qq" />
+		<result property="address" column="address" />
+		<result property="birthday" column="birthday" />
+		<result property="stu_status" column="stu_status" />
+		<result property="class_id" column="class_id" />
+		<association property="classes" column="classes" resultMap="resultMapClasses"></association>
+		
+		<!-- <result property="classes.class_name" column="class_name" />
+		<result property="classes.class_status" column="class_status" />  -->
+		
+		<!-- <association property="" javaType="" >
+			<id property="class_id" column="" />
+			<result property="class_name" column="" />
+			<result property="class_status" column="" />
+		</association> -->
+	</resultMap>	
+	<resultMap type="classes" id="resultMapClasses">
+		<id property="class_id" column="class_id" />
+		<result property="class_name" column="class_name" />
+		<result property="class_status" column="class_status" />
+	</resultMap>
+</mapper>

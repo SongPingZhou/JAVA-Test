@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spz.dao.StudentsMapper">
+
+	<select id="selectStudents" parameterType="students" resultMap="com.spz.dao.mapperMap.resultMapStudents">
+		SELECT s.*,c.class_name,c.class_status  
+		FROM students  s INNER JOIN classes c 
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				and stu_name like "%"#{stu_name}"%"
+			</if>
+			<if test="address != null and address != ''">
+				and address like "%"#{address}"%"
+			</if>
+			<!-- &lt; < -->
+			<!-- &gt; > -->
+			<if test="minBirth != null and minBirth !=''">
+				and birthday &gt;= #{minBirth}
+			</if>
+			<if test="maxBirth != null and maxBirth !=''">
+				and birthday &lt;= #{maxBirth}
+			</if>
+			<if test="class_id !=null and class_id != ''">
+				and c.class_id=#{class_id}
+			</if>
+			<if test="1>0">
+			 	and s.class_id = c.class_id
+			</if>
+		</where>
+		limit #{page},#{rows}
+	</select>
+	
+	<select id="selectStudentsCount" parameterType="students" resultType="int">
+		SELECT count(1)
+		FROM students s INNER JOIN classes c  
+		<where>
+			<if test="stu_name != null and stu_name != ''">
+				and stu_name like "%"#{stu_name}"%"
+			</if>
+			<if test="address != null and address != ''">
+				and address like "%"#{address}"%"
+			</if>
+			<!-- &lt; <
+			&gt; > -->
+			<if test="minBirth != null and minBirth !=''">
+				and birthday &gt;= #{minBirth}
+			</if>
+			<if test="maxBirth != null and maxBirth !=''">
+				and birthday &lt;= #{maxBirth}
+			</if>
+			<if test="class_id != null and class_id != ''">
+				and c.class_id=#{class_id}
+			</if>
+			<if test="1>0">
+			 and s.class_id = c.class_id
+			</if> 
+		</where>
+	</select>
+	
+	<insert id="insertStudent" parameterType="students">
+		insert ignore into students(stu_name,sex,mtel,qq,address,birthday,stu_status,class_id)
+		 values(#{stu_name},#{sex},#{mtel},#{qq},#{address},#{birthday},#{stu_status},#{class_id});
+	</insert>
+	
+	<update id="updateStudent">
+		update students
+		<set>
+			<if test="stu_name != null and stu_name != ''">
+				 stu_name = #{stu_name},
+			</if>
+			<if test="sex != null and sex != ''">
+				 sex = #{sex},
+			</if>
+			<if test="address != null and address != ''">
+				 address = #{address},
+			</if>
+			<if test="mtel != null and mtel != ''">
+				 mtel = #{mtel},
+			</if>
+			<if test="qq != null and qq != ''">
+				 qq = #{qq},
+			</if>
+			<if test="stu_status != null and stu_status != ''">
+				 stu_status = #{stu_status},
+			</if>
+			<if test="birthday != null and birthday !=''">
+				 birthday = #{birthday},
+			</if>
+			<if test="class_id != null and class_id != ''">
+				 class_id = #{class_id},
+			</if>
+		</set>
+		where stu_id=#{stu_id} 
+	</update>
+	
+	<delete id="deleteStudent" parameterType="int">
+		delete from students where stu_id=#{stu_id} 
+	</delete>
+	
+	<select id="selectStudentsById" parameterType="int" resultType="students">
+		select * from students where stu_id=#{stu_id}
+	</select>
+</mapper>

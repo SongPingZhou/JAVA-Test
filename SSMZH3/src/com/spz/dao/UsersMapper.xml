@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spz.dao.UsersMapper">
+	<insert id="insertUsers" parameterType="users">
+		insert into users(u_name,u_pwd) values(#{u_name},#{u_pwd});
+	</insert>
+	<select id="selectUserByUser" parameterType="users" resultType="users">
+		select u_id,u_name,u_pwd from users where u_name = #{u_name} and u_pwd=#{u_pwd};
+	</select>
+</mapper>

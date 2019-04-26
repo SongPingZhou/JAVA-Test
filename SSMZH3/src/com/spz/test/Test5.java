@@ -1,0 +1,23 @@
+package com.spz.test;
+
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class Test5 {
+	public static void main(String[] args) {
+		fileChooser();
+	}
+	public static void fileChooser() {
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		//设置文件类型
+		chooser.setFileFilter(filter);
+		//打开选择器面板
+		int returnVal = chooser.showOpenDialog(new JPanel());
+		//保存文件从这里入手，输出的是文件名
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			System.out.println("你打开的文件是: " + chooser.getSelectedFile().getName());
+		}
+	}
+}
